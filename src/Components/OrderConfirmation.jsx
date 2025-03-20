@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { formatCurrency } from "../utils/helpers";
 import Button from "./Button";
 import { clearCartItems } from "../features/cartSlice";
+import DeleteButton from "./DeleteButton";
 const StyledOrderConfirmation = styled.div`
   padding: 30px;
   background-color: var(--color-red-50);
@@ -38,6 +39,20 @@ const OrderItemsDiv = styled.div`
   margin: 30px 0;
   border-radius: 20px;
   padding: 20px;
+
+  max-height: 500px;
+  overflow-y: auto;
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  & {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 `;
 
 const StyledImage = styled.img`
@@ -57,7 +72,7 @@ const OrderItem = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 30px 0;
+  margin: 10px 0;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--color-red-500);
 `;
@@ -120,12 +135,20 @@ const OrderConfirmation = () => {
     dispatch(clearCartItems());
   }
   return (
-    <OrderModalWindow>
+    <OrderModalWindow onClick={handleClearOrderItems}>
       <OrderConfirmationContainer>
         <StyledOrderConfirmation>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "end",
+            }}
+          >
+            <DeleteButton handleClick={handleClearOrderItems}></DeleteButton>
+          </div>
           <OrderConfirmationHeader>
-            <h1>Order Confirmed</h1>
             <img src="assets/images/icon-order-confirmed.svg" alt="" />
+            <h1>Order Confirmed</h1>
           </OrderConfirmationHeader>
           <p>We hope you enjoyed your food!</p>
           <OrderItemsDiv>
@@ -138,8 +161,19 @@ const OrderConfirmation = () => {
                     {/* Food name and item specs */}
                     <p>{item.name}</p>
                     <OrderQuantityUnitPriceContainer>
-                      <p>{item.quantity}x</p>
-                      <p>&#64; {formatCurrency(item.price)}</p>
+                      <p
+                        style={{ color: "var(--color-red)", fontWeight: "600" }}
+                      >
+                        {item.quantity}x
+                      </p>
+                      <p
+                        style={{
+                          color: "var(--color-red-900)",
+                          fontWeight: "600",
+                        }}
+                      >
+                        &#64; {formatCurrency(item.price)}
+                      </p>
                     </OrderQuantityUnitPriceContainer>
                   </OrderNamePriceContainer>
                 </OrderSpecificsDiv>

@@ -102,7 +102,7 @@ const DessertItem = ({ item }) => {
             />
             {cartItemQuantity > 0 ? (
               <UpdateCartItemQuantity>
-                <button onClick={handleDecrease}>
+                <button onClick={handleDecrease} height={"100%"} width={"100%"}>
                   <img src="assets\images\icon-decrement-quantity.svg" alt="" />
                 </button>
                 {cartItemQuantity}

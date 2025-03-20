@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { deleteItem } from "../features/cartSlice";
-
+import DeleteButton from "./DeleteButton";
 const CartItemDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -43,13 +43,6 @@ const TotalPrice = styled.p`
   color: var(--color-red-500);
 `;
 
-const DeleteButton = styled.button`
-  padding: 10px;
-  border: none;
-  background-color: inherit;
-  cursor: pointer;
-`;
-
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
   function handleDelete() {
@@ -65,9 +58,7 @@ const CartItem = ({ item }) => {
           <TotalPrice>&#36;{item.totalPrice.toFixed(2)}</TotalPrice>
         </PriceAndQuantity>
       </CartSpecifics>
-      <DeleteButton onClick={handleDelete}>
-        <img src="assets/images/icon-remove-item.svg" alt="" />
-      </DeleteButton>
+      <DeleteButton handleClick={handleDelete} />
     </CartItemDiv>
   );
 };
